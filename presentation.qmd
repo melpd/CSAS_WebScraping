@@ -69,6 +69,70 @@ pip install selenium
 - Use a parsing library like Beautiful Soup or Selenium to process the HTML response
 - Clean and store the relevant infomation
 
+# Examples
+
+## Web-Scraping Formula 1 Drivers
+
+```{python}
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+import re  # Import regex for extracting country codes
+
+# URL of the page
+url = "https://gpracingstats.com/drivers/"
+
+# Send a GET request to the website
+headers = {"User-Agent": "Mozilla/5.0"}
+response = requests.get(url, headers=headers)
+
+# Check if the request was successful
+if response.status_code == 200:
+    # Parse the HTML content
+    soup = BeautifulSoup(response.text, "html.parser")
+    
+    # Find the table containing the driver list
+    table = soup.find("table", {"id": "filterTable"})
+    
+    # Extract driver details from the table rows
+    driver_data = []
+    if table:
+        rows = table.find("tbody").find_all("tr")
+        for row in rows:
+            cols = row.find_all("td")
+            if len(cols) >= 3:  # Ensure there are at least 3 columns
+                driver_name = cols[0].text.strip()
+                birth_date = cols[1].text.strip()
+                f1_years = cols[2].text.strip()
+
+                # Extract country using regex
+                country_match = re.match(r"\((.*?)\)\s*(.*)", driver_name)
+                if country_match:
+                    country = country_match.group(1)  # Extract country code
+                    driver_name = country_match.group(2)  # Extract actual name
+                else:
+                    country = "Unknown"
+
+                # Check for special class highlighting
+                is_current = "Yes" if "current-hl" in row.get("class", []) else "No"
+                is_champion = "Yes" if "first-hl" in row.get("class", []) else "No"
+                
+                driver_data.append([driver_name, country, birth_date, f1_years, is_current, is_champion])
+    
+    # Create a DataFrame
+    df = pd.DataFrame(driver_data, columns=["Driver", "Country", "Date of Birth", "F1 Years", "Current", "Champion"])
+    
+    # Save to CSV (optional)
+    df.to_csv("f1_drivers.csv", index=False)
+    
+    # Display the DataFrame
+    print(df.head())
+
+else:
+    print("Failed to retrieve the webpage")
+
+```
+
 # Data Ethics
 
 ## Why can Web-Scraping be un-ethical
