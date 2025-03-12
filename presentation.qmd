@@ -167,7 +167,7 @@ This presentation has covered:
 - https://www.geeksforgeeks.org/implementing-web-scraping-python-beautiful-soup/
 - https://beautiful-soup-4.readthedocs.io/en/latest/
 - https://forage.ai/blog/legal-and-ethical-issues-in-web-scraping-what-you-need-to-know/ 
-- https://www.wunderground.com/history/weekly/us/ny/new-york-city/KLGA/date/2024-6-30 
-- https://www.nyc.gov/site/nypd/bureaus/patrol/precincts-landing.page
+- https://gpracingstats.com/drivers/
+- https://www.hockey-reference.com/leagues/NHL_2024_games.html
 
 # THANK YOU!
