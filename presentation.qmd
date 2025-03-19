@@ -71,7 +71,7 @@ pip install selenium
 
 # Examples
 
-## Web-Scraping Formula 1 Drivers
+## Web-Scraping Formula 1 Drivers with Beautiful Soup
 
 ```{python}
 import requests
@@ -130,6 +130,152 @@ if response.status_code == 200:
 
 else:
     print("Failed to retrieve the webpage")
+
+```
+
+# Web-Scraping NHL Schedule and Game Information with Selenium
+
+```{python}
+# %%
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
+import pandas as pd
+
+# Setup Selenium WebDriver
+options = Options()
+options.add_argument("--headless")  # Run in headless mode
+options.add_argument("--disable-gpu")
+options.add_argument("--window-size=1920,1080")
+
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+wait = WebDriverWait(driver, 5)  # Wait up to 5 seconds
+
+# Base URL
+base_url = "https://www.hockey-reference.com"
+games_url = f"{base_url}/leagues/NHL_2024_games.html"
+print(games_url)
+
+
+# Step 1: Scrape Main Games Table
+driver.get(games_url)
+wait.until(EC.presence_of_element_located((By.ID, "games")))
+
+# Extract game links
+game_links = [a.get_attribute("href") for a in driver.find_elements(By.XPATH, '//table[@id="games"]/tbody/tr/th[@data-stat="date_game"]/a')]
+
+# Step 2: Visit Each Game Page & Scrape Goalie Stats
+goalie_stats = []
+
+for game_url in game_links[:10]:  # Limit to 10 games for faster execution
+    driver.get(game_url)
+
+    try:
+        # Wait for at least one goalie table to load
+        wait.until(EC.presence_of_element_located((By.XPATH, '//table[contains(@id, "_goalies")]')))
+
+        # Find all goalie tables (home & away)
+        goalie_tables = driver.find_elements(By.XPATH, '//table[contains(@id, "_goalies")]')
+
+        for table in goalie_tables:
+            team_id = table.get_attribute("id")  # Example: "CHI_goalies"
+            rows = table.find_elements(By.XPATH, './/tbody/tr')
+
+            for row in rows:
+                columns = row.find_elements(By.TAG_NAME, "td")
+
+                if len(columns) > 6:  # Ensure it's a valid row
+                    goalie_name = row.find_element(By.TAG_NAME, "th").text.strip()
+                    decision = columns[0].text.strip()  # Win/Loss
+                    ga = columns[1].text.strip()  # Goals Allowed
+                    sa = columns[2].text.strip()  # Shots Against
+                    sv = columns[3].text.strip()  # Saves
+                    sv_pct = columns[4].text.strip()  # Save Percentage
+                    so = columns[5].text.strip()  # Shutouts
+                    pim = columns[6].text.strip()  # Penalty Minutes
+                    toi = columns[7].text.strip()  # Time on Ice
+
+                    goalie_stats.append([team_id, goalie_name, decision, ga, sa, sv, sv_pct, so, pim, toi])
+
+    except Exception as e:
+        print(f"Skipping game {game_url} due to error: {e}")
+
+# Step 3: Store Data in DataFrame
+columns = ["Team_ID", "Goalie_Name", "Decision", "GA", "SA", "SV", "SV%", "SO", "PIM", "TOI"]
+df = pd.DataFrame(goalie_stats, columns=columns)
+
+# Save to CSV
+df.to_csv("goalie_stats_refined.csv", index=False)
+
+# Close driver
+driver.quit()
+
+# Show results
+print(df.head())
+
+```
+
+```{python}
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
+import pandas as pd
+
+# Setup Selenium WebDriver
+options = Options()
+options.add_argument("--headless")  # Run in headless mode
+options.add_argument("--disable-gpu")
+options.add_argument("--window-size=1920,1080")
+
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+wait = WebDriverWait(driver, 5)  # Wait up to 5 seconds
+
+# Base URL
+base_url = "https://www.hockey-reference.com"
+games_url = f"{base_url}/leagues/NHL_2024_games.html"
+
+# Step 1: Scrape the Main Games Table
+driver.get(games_url)
+wait.until(EC.presence_of_element_located((By.ID, "games")))
+
+game_data = []
+
+# Extract game details
+rows = driver.find_elements(By.XPATH, '//table[@id="games"]/tbody/tr')
+
+for row in rows:
+    try:
+        date = row.find_element(By.XPATH, './th[@data-stat="date_game"]').text.strip()
+        time = row.find_element(By.XPATH, './/td[@data-stat="time_game"]').text.strip()
+        away_team = row.find_element(By.XPATH, './td[@data-stat="visitor_team_name"]').text.strip()
+        away_score = row.find_element(By.XPATH, './td[@data-stat="visitor_goals"]').text.strip()
+        home_team = row.find_element(By.XPATH, './td[@data-stat="home_team_name"]').text.strip()
+        home_score = row.find_element(By.XPATH, './td[@data-stat="home_goals"]').text.strip()
+        
+        game_link_elem = row.find_elements(By.XPATH, './th[@data-stat="date_game"]/a')
+        game_link = game_link_elem[0].get_attribute("href") if game_link_elem else ""
+
+        game_data.append([date, time, away_team, away_score, home_team, home_score, game_link])
+    
+    except Exception as e:
+        print(f"Skipping row due to error: {e}")
+
+# Convert to DataFrame
+game_df = pd.DataFrame(game_data, columns=["Date", "Time", "Away Team", "Away Score", "Home Team", "Home Score", "Game Link"])
+
+# Close driver
+driver.quit()
+
+# Show results
+print(game_df.head())
 
 ```
 
