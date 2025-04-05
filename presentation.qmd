@@ -17,8 +17,7 @@ format:
 - Websites are primarily structured with HTML (Hypertext Markup Language), 
   which organizes and displays content. Web scrapers parse through this 
   HTML code to identify and extract relevant information.
-- Applications of web-scraping: sentiment analysis on social media, market 
-  research, e-commerce
+
 
 # How to Web-Scrape with Python
 
@@ -74,6 +73,8 @@ pip install selenium
 ## Web-Scraping Formula 1 Drivers with Beautiful Soup
 
 ```{python}
+#| echo: true
+#| eval: true
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -85,58 +86,59 @@ url = "https://gpracingstats.com/drivers/"
 # Send a GET request to the website
 headers = {"User-Agent": "Mozilla/5.0"}
 response = requests.get(url, headers=headers)
+print(response.status_code) # 200 means that the request was successful
+```
 
-# Check if the request was successful
-if response.status_code == 200:
-    # Parse the HTML content
-    soup = BeautifulSoup(response.text, "html.parser")
-    
-    # Find the table containing the driver list
-    table = soup.find("table", {"id": "filterTable"})
-    
-    # Extract driver details from the table rows
-    driver_data = []
-    if table:
-        rows = table.find("tbody").find_all("tr")
-        for row in rows:
-            cols = row.find_all("td")
-            if len(cols) >= 3:  # Ensure there are at least 3 columns
-                driver_name = cols[0].text.strip()
-                birth_date = cols[1].text.strip()
-                f1_years = cols[2].text.strip()
 
-                # Extract country using regex
-                country_match = re.match(r"\((.*?)\)\s*(.*)", driver_name)
-                if country_match:
-                    country = country_match.group(1)  # Extract country code
-                    driver_name = country_match.group(2)  # Extract actual name
-                else:
+## Scraping the Table
+::: {.scrollable-code}
+```{python}
+# Parse the HTML content
+soup = BeautifulSoup(response.text, "html.parser")
+    
+# Find the table containing the driver list
+table = soup.find("table", {"id": "filterTable"})
+    
+# Extract driver details from the table rows
+driver_data = []
+if table:
+    rows = table.find("tbody").find_all("tr")
+    for row in rows:
+        cols = row.find_all("td")
+        if len(cols) >= 3:  # Ensure there are at least 3 columns
+            driver_name = cols[0].text.strip()
+            birth_date = cols[1].text.strip()
+            f1_years = cols[2].text.strip()
+
+            # Extract country using regex
+            country_match = re.match(r"\((.*?)\)\s*(.*)", driver_name)
+            if country_match:
+                country = country_match.group(1)  # Extract country code
+                driver_name = country_match.group(2)  # Extract actual name
+            else:
                     country = "Unknown"
 
-                # Check for special class highlighting
-                is_current = "Yes" if "current-hl" in row.get("class", []) else "No"
-                is_champion = "Yes" if "first-hl" in row.get("class", []) else "No"
+            # Check for special class highlighting
+            is_current = "Yes" if "current-hl" in row.get("class", []) else "No"
+            is_champion = "Yes" if "first-hl" in row.get("class", []) else "No"
                 
-                driver_data.append([driver_name, country, birth_date, f1_years, is_current, is_champion])
+            driver_data.append([driver_name, country, birth_date, f1_years, is_current, is_champion])
     
-    # Create a DataFrame
-    df = pd.DataFrame(driver_data, columns=["Driver", "Country", "Date of Birth", "F1 Years", "Current", "Champion"])
+# Create a DataFrame
+df = pd.DataFrame(driver_data, columns=["Driver", "Country", "Date of Birth", "F1 Years", "Current", "Champion"])
     
-    # Save to CSV (optional)
-    df.to_csv("f1_drivers.csv", index=False)
+# Save to CSV (optional)
+df.to_csv("f1_drivers.csv", index=False)
     
-    # Display the DataFrame
-    print(df.head())
-
-else:
-    print("Failed to retrieve the webpage")
-
+# Display the DataFrame
+print(df.head())
 ```
 
 # Web-Scraping NHL Schedule and Game Information with Selenium
 
 ```{python}
-# %%
+#| echo: true
+#| eval: false
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -219,7 +221,10 @@ print(df.head())
 
 ```
 
+::: {.scrollable-code}
 ```{python}
+#| echo: true
+#| eval: false
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -233,6 +238,12 @@ import os
 
 CHROMEDRIVER_PATH = r"C:/Users/mpdes/Downloads/chromedriver-win64 (1)/chromedriver-win64\chromedriver.exe"
 
+# Setup Selenium WebDriver
+# options = Options()
+# options.add_argument("--headless")  # Run in headless mode
+# options.add_argument("--disable-gpu")
+# options.add_argument("--window-size=1920,1080")
+# driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")  # Run without UI
@@ -308,9 +319,6 @@ for index, row in game_df.iterrows():
     time.sleep(3)  # Allow time for the page to load
     
     try:
-        # Scrape away team goalie stats
-        #away_goalie_table_id = f"{row['Away Team'].split()[-1]}_goalies"  # Dynamic table ID
-        #print(away_goalie_table_id)
         away_team_code = driver.find_element(By.XPATH, '//td[@data-stat="visitor_team_name"]/a').get_attribute("href").split("/")[-2]
         print(away_team_code)
         home_team_code = driver.find_element(By.XPATH, '//td[@data-stat="home_team_name"]/a').get_attribute("href").split("/")[-2]
@@ -372,122 +380,10 @@ print(final_df.head())
 final_df.to_csv("nhl_games_with_goalies.csv", index=False)
 ```
 
-```{python}
-import time
-import os
-import pandas as pd
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-CHROMEDRIVER_PATH = r"C:/Users/mpdes/Downloads/chromedriver-win64 (1)/chromedriver-win64/chromedriver.exe"
-
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-gpu")
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--window-size=1920,1080")
-
-def start_driver():
-    """Initialize and return a new WebDriver instance."""
-    if not os.path.exists(CHROMEDRIVER_PATH):
-        raise FileNotFoundError(f"ChromeDriver not found at {CHROMEDRIVER_PATH}")
-    service = Service(CHROMEDRIVER_PATH)
-    return webdriver.Chrome(service=service, options=chrome_options)
-
-driver = start_driver()
-wait = WebDriverWait(driver, 5)
-
-base_url = "https://www.hockey-reference.com"
-games_url = f"{base_url}/leagues/NHL_2024_games.html"
-
-driver.get(games_url)
-wait.until(EC.presence_of_element_located((By.ID, "games")))
-
-game_data = []
-rows = driver.find_elements(By.XPATH, '//table[@id="games"]/tbody/tr')
-
-for row in rows:
-    try:
-        date = row.find_element(By.XPATH, './th[@data-stat="date_game"]').text.strip()
-        print(date)
-        away_team_elem = row.find_element(By.XPATH, './td[@data-stat="visitor_team_name"]/a')
-        home_team_elem = row.find_element(By.XPATH, './td[@data-stat="home_team_name"]/a')
-        
-        away_team = away_team_elem.text.strip()
-        away_code = away_team_elem.get_attribute("href").split("/")[-2].upper()
-        home_team = home_team_elem.text.strip()
-        home_code = home_team_elem.get_attribute("href").split("/")[-2].upper()
-        
-        game_link_elem = row.find_elements(By.XPATH, './th[@data-stat="date_game"]/a')
-        game_link = game_link_elem[0].get_attribute("href") if game_link_elem else ""
-        
-        game_data.append([date, away_team, away_code, home_team, home_code, game_link])
-    except Exception as e:
-        print(f"Skipping row due to error: {e}")
-
-# Convert to DataFrame
-game_df = pd.DataFrame(game_data, columns=["Date", "Away Team", "Away Code", "Home Team", "Home Code", "Game Link"])
-
-goalie_stats = []
-
-for index, row in game_df.iterrows():
-    game_url = row["Game Link"]
-    print(game_url)
-    if not game_url:
-        goalie_stats.append(["N/A"] * 18)
-        continue
-    
-    driver.get(game_url)
-    time.sleep(3)
-    
-    def extract_goalie_stats(team_code):
-        try:
-            goalie_table_id = f"all_{team_code}_goalies"
-            goalie_table = driver.find_element(By.ID, goalie_table_id)
-            goalie_rows = goalie_table.find_elements(By.TAG_NAME, "tr")[1:]
-            
-            stats = []
-            for row in goalie_rows:
-                goalie_name = row.find_element(By.XPATH, "./td[@data-stat='player']").text.strip()
-                print(goalie_name)
-                ga = row.find_element(By.XPATH, "./td[@data-stat='goals_against']").text.strip()
-                dec = row.find_element(By.XPATH, "./td[@data-stat='decision']").text.strip()
-                sa = row.find_element(By.XPATH, "./td[@data-stat='shots_against']").text.strip()
-                saves = row.find_element(By.XPATH, "./td[@data-stat='saves']").text.strip()
-                sv_pct = row.find_element(By.XPATH, "./td[@data-stat='save_pct']").text.strip()
-                shutouts = row.find_element(By.XPATH, "./td[@data-stat='shutouts']").text.strip()
-                pms = row.find_element(By.XPATH, "./td[@data-stat='pen_min']").text.strip()
-                toi = row.find_element(By.XPATH, "./td[@data-stat='time_on_ice']").text.strip()
-                stats.append([goalie_name, ga, dec, sa, saves, sv_pct, shutouts, pms, toi])
-            return stats[0] if stats else ["N/A"] * 9
-        except Exception:
-            print("Could not find table")
-            return ["N/A"] * 9
-    
-    away_stats = extract_goalie_stats(row['Away Code'])
-    home_stats = extract_goalie_stats(row['Home Code'])
-    goalie_stats.append(away_stats + home_stats)
-
-columns = [
-    "Away Goalie", "Away GA", "Away Dec", "Away SA", "Away Saves", "Away SV%", "Away SO", "Away PIM", "Away TOI",
-    "Home Goalie", "Home GA", "Home Dec", "Home SA", "Home Saves", "Home SV%", "Home SO", "Home PIM", "Home TOI"
-]
-
-goalie_df = pd.DataFrame(goalie_stats, columns=columns)
-final_df = pd.concat([game_df, goalie_df], axis=1)
-
-driver.quit()
-
-final_df.to_csv("nhl_games_with_goalies.csv", index=False)
-print(final_df.head())
-
-```
 
 ```{python}
+#| echo: true
+#| eval: false
 import time
 import os
 import pandas as pd
@@ -624,12 +520,6 @@ for index, row in game_df.iterrows():
         away_pms = away_goalie_rows[0].find_element(By.XPATH, "./td[@data-stat='pen_min']").text.strip()
         away_toi = away_goalie_rows[0].find_element(By.XPATH, "./td[@data-stat='time_on_ice']").text.strip()
 
-        # Extract Home Team Goalies
-        #home_goalie_table_id = f"all_{row['Home Code']}_goalies"
-        #print(home_goalie_table_id)
-        #home_goalie_table = driver.find_element(By.ID, home_goalie_table_id)
-        #print(home_goalie_table.get_attribute('outerHTML'))
-        #home_goalie_rows = home_goalie_table.find_elements(By.TAG_NAME, "tr")[2:]
         for row in home_goalie_rows:
             print(row.get_attribute("innerHTML"))
         for row in home_goalie_rows:
