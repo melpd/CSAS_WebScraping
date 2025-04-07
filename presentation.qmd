@@ -131,6 +131,8 @@ df.to_csv("f1_drivers.csv", index=False)
 print(df.head())
 ```
 
+:::
+
 # Web-Scraping NHL Schedule and Game Information with Selenium
 
 ## 
@@ -324,6 +326,8 @@ print(final_df.head())
 # Close WebDriver
 driver.quit()
 ```
+
+:::
 
 # Data Ethics
 
