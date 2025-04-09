@@ -121,7 +121,14 @@ if table:
             is_champion = "Yes" if "first-hl" in row.get("class", []) else "No"
                 
             driver_data.append([driver_name, country, birth_date, f1_years, is_current, is_champion])
-    
+```
+
+:::
+
+## Save as a Data Frame
+```{r}
+#| echo: true
+#| eval: true
 # Create a DataFrame
 df = pd.DataFrame(driver_data, columns=["Driver", "Country", "Date of Birth", "F1 Years", "Current", "Champion"])
     
@@ -131,11 +138,10 @@ df.to_csv("f1_drivers.csv", index=False)
 print(df.head())
 ```
 
-:::
 
 # Web-Scraping NHL Schedule and Game Information with Selenium
 
-## 
+## Import Relevant Packages
 ::: {.scrollable-code}
 ```{python}
 #| echo: true
@@ -149,7 +155,13 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+```
 
+## Import Relevant Packages
+::: {.scrollable-code}
+```{r}
+#| echo: true
+#| eval: false
 CHROMEDRIVER_PATH = r"C:/Users/mpdes/Downloads/chromedriver-win64 (1)/chromedriver-win64/chromedriver.exe"
 
 chrome_options = Options()
@@ -170,23 +182,23 @@ def start_driver():
 
 driver = start_driver()
 wait = WebDriverWait(driver, 5)
+```
+:::
 
-# URL of NHL game summary page
+## Scraping the Game Data
+::: {.scrollable-code}
+```{r}
 url = "https://www.hockey-reference.com/leagues/NHL_2024_games.html"
 
-# Load the page
-driver.get(url)
+driver.get(url) # Load the page
 time.sleep(3)  # Allow time for elements to load
 
-# Locate the games table
-games_table = driver.find_element(By.ID, "games")
+games_table = driver.find_element(By.ID, "games") # Locate the games table
 rows = games_table.find_elements(By.TAG_NAME, "tr")[1:]  # Skip header row
 
-# List to store extracted data
-game_data = []
+game_data = [] # List to store extracted data
 
-# Iterate over each game row
-for row in rows:
+for row in rows: # Iterate over each game row
     try:
         # Extract game date & time
         date = row.find_element(By.XPATH, './th[@data-stat="date_game"]/a').text.strip()
@@ -217,7 +229,6 @@ for row in rows:
             date, game_time, away_team, away_team_code, away_score,
             home_team, home_team_code, home_score, game_link
         ])
-    
     except Exception as e:
         print(f"Skipping row due to error: {e}")
 
@@ -228,9 +239,14 @@ game_df = pd.DataFrame(game_data, columns=[
 ])
 
 # Show results
-print(game_df.head())
+# print(game_df.head())
+```
 
-# Now extract goalie stats
+:::
+
+## Scraping Goalie Data
+::: {.scrollable-code}
+```{r}
 goalie_stats = []
 
 for index, row in game_df.iterrows():
@@ -265,7 +281,6 @@ for index, row in game_df.iterrows():
                 print(f"Goalie found: {player_name}")
             except Exception:
                 print("No player data in this row")
-
 
         # Extract first goalie's stats
         away_goalie_name = away_goalie_rows[0].find_element(By.XPATH, "./td[@data-stat='player']").text.strip()
