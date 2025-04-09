@@ -7,8 +7,7 @@ format:
         slide-number: true
         preview-links: true
         theme: solarized
-execute:
-  engine: python
+jupyter: python3
 ---
 
 ## What is Web-Scraping
@@ -84,7 +83,6 @@ pip install selenium
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import re  # Import regex for extracting country codes
 
 # URL of the page
 url = "https://gpracingstats.com/drivers/"
@@ -115,20 +113,12 @@ if table:
             birth_date = cols[1].text.strip()
             f1_years = cols[2].text.strip()
 
-            country_match = re.match(r"\((.*?)\)\s*(.*)", driver_name) # Extract country using regex
-            if country_match:
-                country = country_match.group(1)  # Extract country code
-                driver_name = country_match.group(2)  # Extract actual name
-            else:
-                    country = "Unknown"
-
             # Check for special class highlighting
             is_current = "Yes" if "current-hl" in row.get("class", []) else "No"
             is_champion = "Yes" if "first-hl" in row.get("class", []) else "No"
                 
-            driver_data.append([driver_name, country, birth_date, f1_years, is_current, is_champion])
+            driver_data.append([driver_name, birth_date, f1_years, is_current, is_champion])
 ```
-
 :::
 
 ## Save as a Data Frame
@@ -147,8 +137,6 @@ print(df.head())
 
 # Web-Scraping NHL Schedule and Game Information with Selenium
 
-## Import Relevant Packages
-::: {.scrollable-code}
 ```{python}
 #| echo: true
 #| eval: false
@@ -189,6 +177,7 @@ def start_driver():
 driver = start_driver()
 wait = WebDriverWait(driver, 5)
 ```
+
 :::
 
 ## Scraping the Game Data
