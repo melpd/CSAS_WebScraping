@@ -1229,7 +1229,7 @@ margin-right: 0; }
 <li><code>&lt;body&gt;</code> : identifies the website body</li>
 <li><code>&lt;table&gt;</code> : identifies a table</li>
 <li><code>&lt;tbody&gt;</code> : identifies the body of the table</li>
-<li><code>&lt;tr&gt;</code> : indentifies the row of a table</li>
+<li><code>&lt;tr&gt;</code> : identifies the row of a table</li>
 </ul>
 </section>
 <section>
@@ -1243,9 +1243,7 @@ margin-right: 0; }
 <li>The Beautiful Soup Python Library simplifies the process of parsing and navigating HTML and XML documents, making it easier to extract data from websites.</li>
 <li>Beautiful soup can be installed using</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource {bash} number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href></a>#| echo: true</span>
-<span id="cb1-2"><a href></a>#| eval: false</span>
-<span id="cb1-3"><a href></a>pip install beautifulsoup4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource {bash} number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a href></a>pip install beautifulsoup4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Beautiful Soup is ideal for scraping data from static websites. Static websites do not change based on user actions or require server-side interactions to update content dynamically.</li>
 </ul>
@@ -1257,9 +1255,7 @@ margin-right: 0; }
 <li>Dynamic sites often use backend programming to pull data from a database, customize it, and render it in real time based on user requests.</li>
 <li>Selenium can be installed using</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource {bash} number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a href></a>#| echo: true</span>
-<span id="cb2-2"><a href></a>#| eval: false</span>
-<span id="cb2-3"><a href></a>pip install selenium</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource {bash} number-lines code-with-copy"><code class="sourceCode"><span id="cb2-1"><a href></a>pip install selenium</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>To control a web browser, Selenium requires a WebDriver. Download the driver that matches your browser version and operating system</li>
 </ul>
@@ -1290,18 +1286,19 @@ margin-right: 0; }
 </section>
 <section id="web-scraping-formula-1-drivers-with-beautiful-soup" class="slide level2">
 <h2>Web-Scraping Formula 1 Drivers with Beautiful Soup</h2>
-<div id="ce5aafb5" class="cell" data-execution_count="1">
+<div id="ddf46c7c" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href></a><span class="im">import</span> requests</span>
 <span id="cb3-2"><a href></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
 <span id="cb3-3"><a href></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb3-4"><a href></a></span>
-<span id="cb3-5"><a href></a><span class="co"># URL of the page</span></span>
-<span id="cb3-6"><a href></a>url <span class="op">=</span> <span class="st">&quot;https://gpracingstats.com/drivers/&quot;</span></span>
-<span id="cb3-7"><a href></a></span>
-<span id="cb3-8"><a href></a><span class="co"># Send a GET request to the website</span></span>
-<span id="cb3-9"><a href></a>headers <span class="op">=</span> {<span class="st">&quot;User-Agent&quot;</span>: <span class="st">&quot;Mozilla/5.0&quot;</span>}</span>
-<span id="cb3-10"><a href></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers)</span>
-<span id="cb3-11"><a href></a><span class="bu">print</span>(response.status_code) <span class="co"># 200 means that the request was successful</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href></a><span class="im">import</span> re</span>
+<span id="cb3-5"><a href></a></span>
+<span id="cb3-6"><a href></a><span class="co"># URL of the page</span></span>
+<span id="cb3-7"><a href></a>url <span class="op">=</span> <span class="st">&quot;https://gpracingstats.com/drivers/&quot;</span></span>
+<span id="cb3-8"><a href></a></span>
+<span id="cb3-9"><a href></a><span class="co"># Send a GET request to the website</span></span>
+<span id="cb3-10"><a href></a>headers <span class="op">=</span> {<span class="st">&quot;User-Agent&quot;</span>: <span class="st">&quot;Mozilla/5.0&quot;</span>}</span>
+<span id="cb3-11"><a href></a>response <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers)</span>
+<span id="cb3-12"><a href></a><span class="bu">print</span>(response.status_code) <span class="co"># 200 means that the request was successful</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>200</code></pre>
 </div>
@@ -1310,7 +1307,7 @@ margin-right: 0; }
 <section id="scraping-the-table" class="slide level2">
 <h2>Scraping the Table</h2>
 <div class="scrollable-code">
-<div id="bff446cf" class="cell" data-execution_count="2">
+<div id="23d1f77b" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href></a>soup <span class="op">=</span> BeautifulSoup(response.text, <span class="st">&quot;html.parser&quot;</span>) <span class="co"># Parse the HTML content</span></span>
 <span id="cb5-2"><a href></a></span>
 <span id="cb5-3"><a href></a>table <span class="op">=</span> soup.find(<span class="st">&quot;table&quot;</span>, {<span class="st">&quot;id&quot;</span>: <span class="st">&quot;filterTable&quot;</span>}) <span class="co"># Find the table containing the driver list</span></span>
@@ -1324,26 +1321,38 @@ margin-right: 0; }
 <span id="cb5-11"><a href></a>            driver_name <span class="op">=</span> cols[<span class="dv">0</span>].text.strip()</span>
 <span id="cb5-12"><a href></a>            birth_date <span class="op">=</span> cols[<span class="dv">1</span>].text.strip()</span>
 <span id="cb5-13"><a href></a>            f1_years <span class="op">=</span> cols[<span class="dv">2</span>].text.strip()</span>
-<span id="cb5-14"><a href></a></span>
-<span id="cb5-15"><a href></a>            <span class="co"># Check for special class highlighting</span></span>
-<span id="cb5-16"><a href></a>            is_current <span class="op">=</span> <span class="st">&quot;Yes&quot;</span> <span class="cf">if</span> <span class="st">&quot;current-hl&quot;</span> <span class="kw">in</span> row.get(<span class="st">&quot;class&quot;</span>, []) <span class="cf">else</span> <span class="st">&quot;No&quot;</span></span>
-<span id="cb5-17"><a href></a>            is_champion <span class="op">=</span> <span class="st">&quot;Yes&quot;</span> <span class="cf">if</span> <span class="st">&quot;first-hl&quot;</span> <span class="kw">in</span> row.get(<span class="st">&quot;class&quot;</span>, []) <span class="cf">else</span> <span class="st">&quot;No&quot;</span></span>
-<span id="cb5-18"><a href></a>                </span>
-<span id="cb5-19"><a href></a>            driver_data.append([driver_name, birth_date, f1_years, is_current, is_champion])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-14"><a href></a>            country_match <span class="op">=</span> re.match(<span class="vs">r&quot;\((.*?)\)\s*(.*)&quot;</span>, driver_name) <span class="co"># Extract country using regex</span></span>
+<span id="cb5-15"><a href></a>            <span class="cf">if</span> country_match:</span>
+<span id="cb5-16"><a href></a>                country <span class="op">=</span> country_match.group(<span class="dv">1</span>)  <span class="co"># Extract country code</span></span>
+<span id="cb5-17"><a href></a>                driver_name <span class="op">=</span> country_match.group(<span class="dv">2</span>)  <span class="co"># Extract actual</span></span>
+<span id="cb5-18"><a href></a></span>
+<span id="cb5-19"><a href></a>            <span class="co"># Check for special class highlighting</span></span>
+<span id="cb5-20"><a href></a>            is_current <span class="op">=</span> <span class="st">&quot;Yes&quot;</span> <span class="cf">if</span> <span class="st">&quot;current-hl&quot;</span> <span class="kw">in</span> row.get(<span class="st">&quot;class&quot;</span>, []) <span class="cf">else</span> <span class="st">&quot;No&quot;</span></span>
+<span id="cb5-21"><a href></a>            is_champion <span class="op">=</span> <span class="st">&quot;Yes&quot;</span> <span class="cf">if</span> <span class="st">&quot;first-hl&quot;</span> <span class="kw">in</span> row.get(<span class="st">&quot;class&quot;</span>, []) <span class="cf">else</span> <span class="st">&quot;No&quot;</span></span>
+<span id="cb5-22"><a href></a>                </span>
+<span id="cb5-23"><a href></a>            driver_data.append([driver_name, birth_date, f1_years, is_current, is_champion])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="save-as-a-data-frame" class="slide level2">
 <h2>Save as a Data Frame</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource {r} number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a href></a>#| echo: true</span>
-<span id="cb6-2"><a href></a>#| eval: true</span>
-<span id="cb6-3"><a href></a># Create a DataFrame</span>
-<span id="cb6-4"><a href></a>df = pd.DataFrame(driver_data, columns=[&quot;Driver&quot;,  &quot;Date of Birth&quot;, &quot;F1 Years&quot;, &quot;Current&quot;, &quot;Champion&quot;])</span>
-<span id="cb6-5"><a href></a>    </span>
-<span id="cb6-6"><a href></a># Save to CSV (optional)</span>
-<span id="cb6-7"><a href></a>df.to_csv(&quot;f1_drivers.csv&quot;, index=False)</span>
-<span id="cb6-8"><a href></a></span>
-<span id="cb6-9"><a href></a>print(df.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="6a0a1e0c" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href></a><span class="co"># Create a DataFrame</span></span>
+<span id="cb6-2"><a href></a>df <span class="op">=</span> pd.DataFrame(driver_data, columns<span class="op">=</span>[<span class="st">&quot;Driver&quot;</span>,  <span class="st">&quot;Date of Birth&quot;</span>, <span class="st">&quot;F1 Years&quot;</span>, <span class="st">&quot;Current&quot;</span>, <span class="st">&quot;Champion&quot;</span>])</span>
+<span id="cb6-3"><a href></a>    </span>
+<span id="cb6-4"><a href></a><span class="co"># Save to CSV (optional)</span></span>
+<span id="cb6-5"><a href></a>df.to_csv(<span class="st">&quot;f1_drivers.csv&quot;</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-6"><a href></a></span>
+<span id="cb6-7"><a href></a><span class="bu">print</span>(df.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Driver     Date of Birth    F1 Years Current Champion
+0      George Abecassis     21 March 1913     1951-52      No       No
+1         Kenny Acheson  27 November 1957  1983, 1985      No       No
+2        Philippe Adams  19 November 1969        1994      No       No
+3  Walt Ader (Indy 500)  15 December 1913        1950      No       No
+4           Kurt Adolff  05 November 1921        1953      No       No</code></pre>
+</div>
+</div>
 </section></section>
 <section>
 <section id="web-scraping-nhl-schedule-and-game-information-with-selenium" class="title-slide slide level1 center">
@@ -1352,208 +1361,208 @@ margin-right: 0; }
 </section>
 <section id="load-all-relevant-packages" class="slide level2">
 <h2>Load all Relevant Packages</h2>
-<div id="290d1aac" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href></a><span class="im">import</span> time</span>
-<span id="cb7-2"><a href></a><span class="im">import</span> os</span>
-<span id="cb7-3"><a href></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb7-4"><a href></a><span class="im">from</span> selenium <span class="im">import</span> webdriver</span>
-<span id="cb7-5"><a href></a><span class="im">from</span> selenium.webdriver.common.by <span class="im">import</span> By</span>
-<span id="cb7-6"><a href></a><span class="im">from</span> selenium.webdriver.chrome.service <span class="im">import</span> Service</span>
-<span id="cb7-7"><a href></a><span class="im">from</span> selenium.webdriver.chrome.options <span class="im">import</span> Options</span>
-<span id="cb7-8"><a href></a><span class="im">from</span> selenium.webdriver.support.ui <span class="im">import</span> WebDriverWait</span>
-<span id="cb7-9"><a href></a><span class="im">from</span> selenium.webdriver.support <span class="im">import</span> expected_conditions <span class="im">as</span> EC</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="a19493f7" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href></a><span class="im">import</span> time</span>
+<span id="cb8-2"><a href></a><span class="im">import</span> os</span>
+<span id="cb8-3"><a href></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-4"><a href></a><span class="im">from</span> selenium <span class="im">import</span> webdriver</span>
+<span id="cb8-5"><a href></a><span class="im">from</span> selenium.webdriver.common.by <span class="im">import</span> By</span>
+<span id="cb8-6"><a href></a><span class="im">from</span> selenium.webdriver.chrome.service <span class="im">import</span> Service</span>
+<span id="cb8-7"><a href></a><span class="im">from</span> selenium.webdriver.chrome.options <span class="im">import</span> Options</span>
+<span id="cb8-8"><a href></a><span class="im">from</span> selenium.webdriver.support.ui <span class="im">import</span> WebDriverWait</span>
+<span id="cb8-9"><a href></a><span class="im">from</span> selenium.webdriver.support <span class="im">import</span> expected_conditions <span class="im">as</span> EC</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="import-relevant-packages" class="slide level2">
-<h2>Import Relevant Packages</h2>
+<section id="set-up-web-driver" class="slide level2">
+<h2>Set-Up Web Driver</h2>
 <div class="scrollable-code">
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource {r} number-lines code-with-copy"><code class="sourceCode"><span id="cb8-1"><a href></a>#| echo: true</span>
-<span id="cb8-2"><a href></a>#| eval: false</span>
-<span id="cb8-3"><a href></a>CHROMEDRIVER_PATH = r&quot;C:/Users/mpdes/Downloads/chromedriver-win64 (1)/chromedriver-win64/chromedriver.exe&quot;</span>
-<span id="cb8-4"><a href></a></span>
-<span id="cb8-5"><a href></a>chrome_options = Options()</span>
-<span id="cb8-6"><a href></a>chrome_options.add_argument(&quot;--headless&quot;)</span>
-<span id="cb8-7"><a href></a>chrome_options.add_argument(&quot;--disable-gpu&quot;)</span>
-<span id="cb8-8"><a href></a>chrome_options.add_argument(&quot;--no-sandbox&quot;)</span>
-<span id="cb8-9"><a href></a>chrome_options.add_argument(&quot;--window-size=1920,1080&quot;)</span>
-<span id="cb8-10"><a href></a></span>
-<span id="cb8-11"><a href></a>def start_driver():</span>
-<span id="cb8-12"><a href></a>    &quot;&quot;&quot;Initialize and return a new WebDriver instance.&quot;&quot;&quot;</span>
-<span id="cb8-13"><a href></a>    if not os.path.exists(CHROMEDRIVER_PATH):</span>
-<span id="cb8-14"><a href></a>        raise FileNotFoundError(f&quot;ChromeDriver not found at {CHROMEDRIVER_PATH}&quot;)</span>
-<span id="cb8-15"><a href></a>    service = Service(CHROMEDRIVER_PATH)</span>
-<span id="cb8-16"><a href></a>    return webdriver.Chrome(service=service, options=chrome_options)</span>
-<span id="cb8-17"><a href></a></span>
-<span id="cb8-18"><a href></a># Setup Selenium WebDriver</span>
-<span id="cb8-19"><a href></a># driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)</span>
-<span id="cb8-20"><a href></a></span>
-<span id="cb8-21"><a href></a>driver = start_driver()</span>
-<span id="cb8-22"><a href></a>wait = WebDriverWait(driver, 5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="87c074cc" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href></a>CHROMEDRIVER_PATH <span class="op">=</span> <span class="vs">r&quot;C:/Users/mpdes/Downloads/chromedriver-win64 (1)/chromedriver-win64/chromedriver.exe&quot;</span></span>
+<span id="cb9-2"><a href></a></span>
+<span id="cb9-3"><a href></a>chrome_options <span class="op">=</span> Options()</span>
+<span id="cb9-4"><a href></a>chrome_options.add_argument(<span class="st">&quot;--headless&quot;</span>)</span>
+<span id="cb9-5"><a href></a>chrome_options.add_argument(<span class="st">&quot;--disable-gpu&quot;</span>)</span>
+<span id="cb9-6"><a href></a>chrome_options.add_argument(<span class="st">&quot;--no-sandbox&quot;</span>)</span>
+<span id="cb9-7"><a href></a>chrome_options.add_argument(<span class="st">&quot;--window-size=1920,1080&quot;</span>)</span>
+<span id="cb9-8"><a href></a></span>
+<span id="cb9-9"><a href></a><span class="kw">def</span> start_driver():</span>
+<span id="cb9-10"><a href></a>    <span class="co">&quot;&quot;&quot;Initialize and return a new WebDriver instance.&quot;&quot;&quot;</span></span>
+<span id="cb9-11"><a href></a>    <span class="cf">if</span> <span class="kw">not</span> os.path.exists(CHROMEDRIVER_PATH):</span>
+<span id="cb9-12"><a href></a>        <span class="cf">raise</span> <span class="pp">FileNotFoundError</span>(<span class="ss">f&quot;ChromeDriver not found at </span><span class="sc">{</span>CHROMEDRIVER_PATH<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb9-13"><a href></a>    service <span class="op">=</span> Service(CHROMEDRIVER_PATH)</span>
+<span id="cb9-14"><a href></a>    <span class="cf">return</span> webdriver.Chrome(service<span class="op">=</span>service, options<span class="op">=</span>chrome_options)</span>
+<span id="cb9-15"><a href></a></span>
+<span id="cb9-16"><a href></a><span class="co"># Setup Selenium WebDriver</span></span>
+<span id="cb9-17"><a href></a><span class="co"># driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)</span></span>
+<span id="cb9-18"><a href></a></span>
+<span id="cb9-19"><a href></a>driver <span class="op">=</span> start_driver()</span>
+<span id="cb9-20"><a href></a>wait <span class="op">=</span> WebDriverWait(driver, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </section>
 <section id="scraping-the-game-data" class="slide level2">
 <h2>Scraping the Game Data</h2>
 <div class="scrollable-code">
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource {r} number-lines code-with-copy"><code class="sourceCode"><span id="cb9-1"><a href></a>#| echo: true</span>
-<span id="cb9-2"><a href></a>#| eval: false</span>
-<span id="cb9-3"><a href></a>url = &quot;https://www.hockey-reference.com/leagues/NHL_2024_games.html&quot;</span>
-<span id="cb9-4"><a href></a></span>
-<span id="cb9-5"><a href></a>driver.get(url) # Load the page</span>
-<span id="cb9-6"><a href></a>time.sleep(3)  # Allow time for elements to load</span>
-<span id="cb9-7"><a href></a></span>
-<span id="cb9-8"><a href></a>games_table = driver.find_element(By.ID, &quot;games&quot;) # Locate the games table</span>
-<span id="cb9-9"><a href></a>rows = games_table.find_elements(By.TAG_NAME, &quot;tr&quot;)[1:]  # Skip header row</span>
-<span id="cb9-10"><a href></a></span>
-<span id="cb9-11"><a href></a>game_data = [] # List to store extracted data</span>
-<span id="cb9-12"><a href></a></span>
-<span id="cb9-13"><a href></a>for row in rows: # Iterate over each game row</span>
-<span id="cb9-14"><a href></a>    try:</span>
-<span id="cb9-15"><a href></a>        # Extract game date &amp; time</span>
-<span id="cb9-16"><a href></a>        date = row.find_element(By.XPATH, &#39;./th[@data-stat=&quot;date_game&quot;]/a&#39;).text.strip()</span>
-<span id="cb9-17"><a href></a>        print(date)</span>
-<span id="cb9-18"><a href></a>        game_time = row.find_element(By.XPATH, &#39;.//td[@data-stat=&quot;time_game&quot;]&#39;).text.strip()</span>
-<span id="cb9-19"><a href></a></span>
-<span id="cb9-20"><a href></a>        # Extract visitor team &amp; code</span>
-<span id="cb9-21"><a href></a>        away_team_elem = row.find_element(By.XPATH, &#39;./td[@data-stat=&quot;visitor_team_name&quot;]/a&#39;)</span>
-<span id="cb9-22"><a href></a>        away_team = away_team_elem.text.strip()  # Full team name</span>
-<span id="cb9-23"><a href></a>        away_team_code = away_team_elem.get_attribute(&quot;href&quot;).split(&quot;/&quot;)[-2]  # Extract &quot;CHI&quot;</span>
-<span id="cb9-24"><a href></a></span>
-<span id="cb9-25"><a href></a>        # Extract home team &amp; code</span>
-<span id="cb9-26"><a href></a>        home_team_elem = row.find_element(By.XPATH, &#39;./td[@data-stat=&quot;home_team_name&quot;]/a&#39;)</span>
-<span id="cb9-27"><a href></a>        home_team = home_team_elem.text.strip()  # Full team name</span>
-<span id="cb9-28"><a href></a>        home_team_code = home_team_elem.get_attribute(&quot;href&quot;).split(&quot;/&quot;)[-2]  # Extract &quot;PIT&quot;</span>
-<span id="cb9-29"><a href></a></span>
-<span id="cb9-30"><a href></a>        # Extract game link</span>
-<span id="cb9-31"><a href></a>        game_link_elem = row.find_elements(By.XPATH, &#39;./th[@data-stat=&quot;date_game&quot;]/a&#39;)</span>
-<span id="cb9-32"><a href></a>        game_link = game_link_elem[0].get_attribute(&quot;href&quot;) if game_link_elem else &quot;&quot;</span>
-<span id="cb9-33"><a href></a>        print(game_link)</span>
-<span id="cb9-34"><a href></a></span>
-<span id="cb9-35"><a href></a>        # Extract Scores</span>
-<span id="cb9-36"><a href></a>        away_score = row.find_element(By.XPATH, &#39;./td[@data-stat=&quot;visitor_goals&quot;]&#39;).text.strip()</span>
-<span id="cb9-37"><a href></a>        home_score = row.find_element(By.XPATH, &#39;./td[@data-stat=&quot;home_goals&quot;]&#39;).text.strip()</span>
-<span id="cb9-38"><a href></a></span>
-<span id="cb9-39"><a href></a>        # Append game data</span>
-<span id="cb9-40"><a href></a>        game_data.append([</span>
-<span id="cb9-41"><a href></a>            date, game_time, away_team, away_team_code, away_score,</span>
-<span id="cb9-42"><a href></a>            home_team, home_team_code, home_score, game_link</span>
-<span id="cb9-43"><a href></a>        ])</span>
-<span id="cb9-44"><a href></a>    except Exception as e:</span>
-<span id="cb9-45"><a href></a>        print(f&quot;Skipping row due to error: {e}&quot;)</span>
-<span id="cb9-46"><a href></a></span>
-<span id="cb9-47"><a href></a># Convert to DataFrame</span>
-<span id="cb9-48"><a href></a>game_df = pd.DataFrame(game_data, columns=[</span>
-<span id="cb9-49"><a href></a>    &quot;Date&quot;, &quot;Time&quot;, &quot;Away Team&quot;, &quot;Away Code&quot;, &quot;Away Score&quot;,</span>
-<span id="cb9-50"><a href></a>    &quot;Home Team&quot;, &quot;Home Code&quot;, &quot;Home Score&quot;, &quot;Game Link&quot;</span>
-<span id="cb9-51"><a href></a>])</span>
-<span id="cb9-52"><a href></a></span>
-<span id="cb9-53"><a href></a># Show results</span>
-<span id="cb9-54"><a href></a># print(game_df.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="2155b9fc" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href></a>url <span class="op">=</span> <span class="st">&quot;https://www.hockey-reference.com/leagues/NHL_2024_games.html&quot;</span></span>
+<span id="cb10-2"><a href></a></span>
+<span id="cb10-3"><a href></a>driver.get(url) <span class="co"># Load the page</span></span>
+<span id="cb10-4"><a href></a>time.sleep(<span class="dv">3</span>)  <span class="co"># Allow time for elements to load</span></span>
+<span id="cb10-5"><a href></a></span>
+<span id="cb10-6"><a href></a>games_table <span class="op">=</span> driver.find_element(By.ID, <span class="st">&quot;games&quot;</span>) <span class="co"># Locate the games table</span></span>
+<span id="cb10-7"><a href></a>rows <span class="op">=</span> games_table.find_elements(By.TAG_NAME, <span class="st">&quot;tr&quot;</span>)[<span class="dv">1</span>:]  <span class="co"># Skip header row</span></span>
+<span id="cb10-8"><a href></a></span>
+<span id="cb10-9"><a href></a>game_data <span class="op">=</span> [] <span class="co"># List to store extracted data</span></span>
+<span id="cb10-10"><a href></a></span>
+<span id="cb10-11"><a href></a><span class="cf">for</span> row <span class="kw">in</span> rows: <span class="co"># Iterate over each game row</span></span>
+<span id="cb10-12"><a href></a>    <span class="cf">try</span>:</span>
+<span id="cb10-13"><a href></a>        <span class="co"># Extract game date &amp; time</span></span>
+<span id="cb10-14"><a href></a>        date <span class="op">=</span> row.find_element(By.XPATH, <span class="st">&#39;./th[@data-stat=&quot;date_game&quot;]/a&#39;</span>).text.strip()</span>
+<span id="cb10-15"><a href></a>        <span class="bu">print</span>(date)</span>
+<span id="cb10-16"><a href></a>        game_time <span class="op">=</span> row.find_element(By.XPATH, <span class="st">&#39;.//td[@data-stat=&quot;time_game&quot;]&#39;</span>).text.strip()</span>
+<span id="cb10-17"><a href></a></span>
+<span id="cb10-18"><a href></a>        <span class="co"># Extract visitor team &amp; code</span></span>
+<span id="cb10-19"><a href></a>        away_team_elem <span class="op">=</span> row.find_element(By.XPATH, <span class="st">&#39;./td[@data-stat=&quot;visitor_team_name&quot;]/a&#39;</span>)</span>
+<span id="cb10-20"><a href></a>        away_team <span class="op">=</span> away_team_elem.text.strip()  <span class="co"># Full team name</span></span>
+<span id="cb10-21"><a href></a>        away_team_code <span class="op">=</span> away_team_elem.get_attribute(<span class="st">&quot;href&quot;</span>).split(<span class="st">&quot;/&quot;</span>)[<span class="op">-</span><span class="dv">2</span>]  <span class="co"># Extract &quot;CHI&quot;</span></span>
+<span id="cb10-22"><a href></a></span>
+<span id="cb10-23"><a href></a>        <span class="co"># Extract home team &amp; code</span></span>
+<span id="cb10-24"><a href></a>        home_team_elem <span class="op">=</span> row.find_element(By.XPATH, <span class="st">&#39;./td[@data-stat=&quot;home_team_name&quot;]/a&#39;</span>)</span>
+<span id="cb10-25"><a href></a>        home_team <span class="op">=</span> home_team_elem.text.strip()  <span class="co"># Full team name</span></span>
+<span id="cb10-26"><a href></a>        home_team_code <span class="op">=</span> home_team_elem.get_attribute(<span class="st">&quot;href&quot;</span>).split(<span class="st">&quot;/&quot;</span>)[<span class="op">-</span><span class="dv">2</span>]  <span class="co"># Extract &quot;PIT&quot;</span></span>
+<span id="cb10-27"><a href></a></span>
+<span id="cb10-28"><a href></a>        <span class="co"># Extract game link</span></span>
+<span id="cb10-29"><a href></a>        game_link_elem <span class="op">=</span> row.find_elements(By.XPATH, <span class="st">&#39;./th[@data-stat=&quot;date_game&quot;]/a&#39;</span>)</span>
+<span id="cb10-30"><a href></a>        game_link <span class="op">=</span> game_link_elem[<span class="dv">0</span>].get_attribute(<span class="st">&quot;href&quot;</span>) <span class="cf">if</span> game_link_elem <span class="cf">else</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb10-31"><a href></a>        <span class="bu">print</span>(game_link)</span>
+<span id="cb10-32"><a href></a></span>
+<span id="cb10-33"><a href></a>        <span class="co"># Extract Scores</span></span>
+<span id="cb10-34"><a href></a>        away_score <span class="op">=</span> row.find_element(By.XPATH, <span class="st">&#39;./td[@data-stat=&quot;visitor_goals&quot;]&#39;</span>).text.strip()</span>
+<span id="cb10-35"><a href></a>        home_score <span class="op">=</span> row.find_element(By.XPATH, <span class="st">&#39;./td[@data-stat=&quot;home_goals&quot;]&#39;</span>).text.strip()</span>
+<span id="cb10-36"><a href></a></span>
+<span id="cb10-37"><a href></a>        <span class="co"># Append game data</span></span>
+<span id="cb10-38"><a href></a>        game_data.append([</span>
+<span id="cb10-39"><a href></a>            date, game_time, away_team, away_team_code, away_score,</span>
+<span id="cb10-40"><a href></a>            home_team, home_team_code, home_score, game_link</span>
+<span id="cb10-41"><a href></a>        ])</span>
+<span id="cb10-42"><a href></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb10-43"><a href></a>        <span class="bu">print</span>(<span class="ss">f&quot;Skipping row due to error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb10-44"><a href></a></span>
+<span id="cb10-45"><a href></a><span class="co"># Convert to DataFrame</span></span>
+<span id="cb10-46"><a href></a>game_df <span class="op">=</span> pd.DataFrame(game_data, columns<span class="op">=</span>[</span>
+<span id="cb10-47"><a href></a>    <span class="st">&quot;Date&quot;</span>, <span class="st">&quot;Time&quot;</span>, <span class="st">&quot;Away Team&quot;</span>, <span class="st">&quot;Away Code&quot;</span>, <span class="st">&quot;Away Score&quot;</span>,</span>
+<span id="cb10-48"><a href></a>    <span class="st">&quot;Home Team&quot;</span>, <span class="st">&quot;Home Code&quot;</span>, <span class="st">&quot;Home Score&quot;</span>, <span class="st">&quot;Game Link&quot;</span></span>
+<span id="cb10-49"><a href></a>])</span>
+<span id="cb10-50"><a href></a></span>
+<span id="cb10-51"><a href></a><span class="co"># Show results</span></span>
+<span id="cb10-52"><a href></a><span class="co"># print(game_df.head())</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </section>
 <section id="scraping-goalie-data" class="slide level2">
 <h2>Scraping Goalie Data</h2>
 <div class="scrollable-code">
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource {r} number-lines code-with-copy"><code class="sourceCode"><span id="cb10-1"><a href></a>#| echo: true</span>
-<span id="cb10-2"><a href></a>#| eval: false</span>
-<span id="cb10-3"><a href></a>goalie_stats = []</span>
-<span id="cb10-4"><a href></a></span>
-<span id="cb10-5"><a href></a>for index, row in game_df.iterrows():</span>
-<span id="cb10-6"><a href></a>    game_url = row[&quot;Game Link&quot;]</span>
-<span id="cb10-7"><a href></a>    print(game_url)</span>
-<span id="cb10-8"><a href></a>    </span>
-<span id="cb10-9"><a href></a>    if not game_url:</span>
-<span id="cb10-10"><a href></a>        goalie_stats.append([&quot;N/A&quot;] * 18)  # If no link, add empty values</span>
-<span id="cb10-11"><a href></a>        continue</span>
-<span id="cb10-12"><a href></a>    </span>
-<span id="cb10-13"><a href></a>    driver.get(game_url)</span>
-<span id="cb10-14"><a href></a>    time.sleep(3)  # Allow page load</span>
-<span id="cb10-15"><a href></a></span>
-<span id="cb10-16"><a href></a>    try:</span>
-<span id="cb10-17"><a href></a></span>
-<span id="cb10-18"><a href></a>        # Extract Away Team Goalies</span>
-<span id="cb10-19"><a href></a>        away_goalie_table_id = f&quot;all_{row[&#39;Away Code&#39;]}_goalies&quot;</span>
-<span id="cb10-20"><a href></a>        home_goalie_table_id = f&quot;all_{row[&#39;Home Code&#39;]}_goalies&quot;</span>
-<span id="cb10-21"><a href></a>        away_goalie_table = driver.find_element(By.ID, away_goalie_table_id)</span>
-<span id="cb10-22"><a href></a>        home_goalie_table = driver.find_element(By.ID, home_goalie_table_id)</span>
-<span id="cb10-23"><a href></a>        print(away_goalie_table)</span>
-<span id="cb10-24"><a href></a>        print(home_goalie_table)</span>
-<span id="cb10-25"><a href></a>        away_goalie_rows = away_goalie_table.find_elements(By.TAG_NAME, &quot;tr&quot;)[2:]</span>
-<span id="cb10-26"><a href></a>        home_goalie_rows = home_goalie_table.find_elements(By.TAG_NAME, &quot;tr&quot;)[2:]</span>
-<span id="cb10-27"><a href></a>        print(away_goalie_rows)</span>
-<span id="cb10-28"><a href></a>        print(home_goalie_rows)</span>
-<span id="cb10-29"><a href></a>        for row in away_goalie_rows:</span>
-<span id="cb10-30"><a href></a>            print(row.get_attribute(&quot;innerHTML&quot;))</span>
-<span id="cb10-31"><a href></a>        for row in away_goalie_rows:</span>
-<span id="cb10-32"><a href></a>            try:</span>
-<span id="cb10-33"><a href></a>                player_name = row.find_element(By.XPATH, &quot;.//td[@data-stat=&#39;player&#39;]&quot;).text.strip()</span>
-<span id="cb10-34"><a href></a>                print(f&quot;Goalie found: {player_name}&quot;)</span>
-<span id="cb10-35"><a href></a>            except Exception:</span>
-<span id="cb10-36"><a href></a>                print(&quot;No player data in this row&quot;)</span>
-<span id="cb10-37"><a href></a></span>
-<span id="cb10-38"><a href></a>        # Extract first goalie&#39;s stats</span>
-<span id="cb10-39"><a href></a>        away_goalie_name = away_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;player&#39;]&quot;).text.strip()</span>
-<span id="cb10-40"><a href></a>        print(away_goalie_name)</span>
-<span id="cb10-41"><a href></a>        away_ga = away_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;goals_against&#39;]&quot;).text.strip()</span>
-<span id="cb10-42"><a href></a>        away_dec = away_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;decision&#39;]&quot;).text.strip()</span>
-<span id="cb10-43"><a href></a>        away_sa = away_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;shots_against&#39;]&quot;).text.strip()</span>
-<span id="cb10-44"><a href></a>        away_saves = away_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;saves&#39;]&quot;).text.strip()</span>
-<span id="cb10-45"><a href></a>        away_sv_pct = away_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;save_pct&#39;]&quot;).text.strip()</span>
-<span id="cb10-46"><a href></a>        away_shutouts = away_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;shutouts&#39;]&quot;).text.strip()</span>
-<span id="cb10-47"><a href></a>        away_pms = away_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;pen_min&#39;]&quot;).text.strip()</span>
-<span id="cb10-48"><a href></a>        away_toi = away_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;time_on_ice&#39;]&quot;).text.strip()</span>
-<span id="cb10-49"><a href></a></span>
-<span id="cb10-50"><a href></a>        for row in home_goalie_rows:</span>
-<span id="cb10-51"><a href></a>            print(row.get_attribute(&quot;innerHTML&quot;))</span>
-<span id="cb10-52"><a href></a>        for row in home_goalie_rows:</span>
-<span id="cb10-53"><a href></a>            try:</span>
-<span id="cb10-54"><a href></a>                player_name = row.find_element(By.XPATH, &quot;.//td[@data-stat=&#39;player&#39;]&quot;).text.strip()</span>
-<span id="cb10-55"><a href></a>                print(f&quot;Goalie found: {player_name}&quot;)</span>
-<span id="cb10-56"><a href></a>            except Exception:</span>
-<span id="cb10-57"><a href></a>                print(&quot;No player data in this row&quot;)</span>
-<span id="cb10-58"><a href></a></span>
-<span id="cb10-59"><a href></a>        # Extract first goalie&#39;s stats</span>
-<span id="cb10-60"><a href></a>        home_goalie_name = home_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;player&#39;]&quot;).text.strip()</span>
-<span id="cb10-61"><a href></a>        home_ga = home_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;goals_against&#39;]&quot;).text.strip()</span>
-<span id="cb10-62"><a href></a>        home_dec = home_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;decision&#39;]&quot;).text.strip()</span>
-<span id="cb10-63"><a href></a>        home_sa = home_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;shots_against&#39;]&quot;).text.strip()</span>
-<span id="cb10-64"><a href></a>        home_saves = home_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;saves&#39;]&quot;).text.strip()</span>
-<span id="cb10-65"><a href></a>        home_sv_pct = home_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;save_pct&#39;]&quot;).text.strip()</span>
-<span id="cb10-66"><a href></a>        home_shutouts = home_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;shutouts&#39;]&quot;).text.strip()</span>
-<span id="cb10-67"><a href></a>        home_pms = home_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;pen_min&#39;]&quot;).text.strip()</span>
-<span id="cb10-68"><a href></a>        home_toi = home_goalie_rows[0].find_element(By.XPATH, &quot;./td[@data-stat=&#39;time_on_ice&#39;]&quot;).text.strip()</span>
-<span id="cb10-69"><a href></a></span>
-<span id="cb10-70"><a href></a>    except Exception:</span>
-<span id="cb10-71"><a href></a>        print(&#39;exception&#39;)</span>
-<span id="cb10-72"><a href></a>        away_goalie_name, away_ga, away_dec, away_sa, away_saves, away_sv_pct, away_shutouts, away_pms, away_toi = [&quot;N/A&quot;] * 9</span>
-<span id="cb10-73"><a href></a>        home_goalie_name, home_ga, home_dec, home_sa, home_saves, home_sv_pct, home_shutouts, home_pms, home_toi = [&quot;N/A&quot;] * 9</span>
-<span id="cb10-74"><a href></a></span>
-<span id="cb10-75"><a href></a>    goalie_stats.append([</span>
-<span id="cb10-76"><a href></a>        away_goalie_name, away_ga, away_dec, away_sa, away_saves, away_sv_pct, away_shutouts, away_pms, away_toi,</span>
-<span id="cb10-77"><a href></a>        home_goalie_name, home_ga, home_dec, home_sa, home_saves, home_sv_pct, home_shutouts, home_pms, home_toi</span>
-<span id="cb10-78"><a href></a>    ])</span>
-<span id="cb10-79"><a href></a></span>
-<span id="cb10-80"><a href></a># Convert goalie stats to DataFrame</span>
-<span id="cb10-81"><a href></a>goalie_df = pd.DataFrame(goalie_stats, columns=[</span>
-<span id="cb10-82"><a href></a>    &quot;Away Goalie&quot;, &quot;Away GA&quot;, &quot;Away DEC&quot;, &quot;Away SA&quot;, &quot;Away Saves&quot;, &quot;Away SV%&quot;, &quot;Away Shutouts&quot;, &quot;Away PIM&quot;, &quot;Away TOI&quot;,</span>
-<span id="cb10-83"><a href></a>    &quot;Home Goalie&quot;, &quot;Home GA&quot;, &quot;Home DEC&quot;, &quot;Home SA&quot;, &quot;Home Saves&quot;, &quot;Home SV%&quot;, &quot;Home Shutouts&quot;, &quot;Home PIM&quot;, &quot;Home TOI&quot;</span>
-<span id="cb10-84"><a href></a>])</span>
-<span id="cb10-85"><a href></a></span>
-<span id="cb10-86"><a href></a># Merge DataFrames</span>
-<span id="cb10-87"><a href></a>final_df = pd.concat([game_df, goalie_df], axis=1)</span>
-<span id="cb10-88"><a href></a></span>
-<span id="cb10-89"><a href></a># Save to CSV</span>
-<span id="cb10-90"><a href></a>final_df.to_csv(&quot;nhl_games_with_goalies.csv&quot;, index=False)</span>
-<span id="cb10-91"><a href></a></span>
-<span id="cb10-92"><a href></a>print(final_df.head())</span>
-<span id="cb10-93"><a href></a></span>
-<span id="cb10-94"><a href></a># Close WebDriver</span>
-<span id="cb10-95"><a href></a>driver.quit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="42bc314f" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href></a>goalie_stats <span class="op">=</span> []</span>
+<span id="cb11-2"><a href></a></span>
+<span id="cb11-3"><a href></a><span class="cf">for</span> index, row <span class="kw">in</span> game_df.iterrows():</span>
+<span id="cb11-4"><a href></a>    game_url <span class="op">=</span> row[<span class="st">&quot;Game Link&quot;</span>]</span>
+<span id="cb11-5"><a href></a>    <span class="bu">print</span>(game_url)</span>
+<span id="cb11-6"><a href></a>    </span>
+<span id="cb11-7"><a href></a>    <span class="cf">if</span> <span class="kw">not</span> game_url:</span>
+<span id="cb11-8"><a href></a>        goalie_stats.append([<span class="st">&quot;N/A&quot;</span>] <span class="op">*</span> <span class="dv">18</span>)  <span class="co"># If no link, add empty values</span></span>
+<span id="cb11-9"><a href></a>        <span class="cf">continue</span></span>
+<span id="cb11-10"><a href></a>    </span>
+<span id="cb11-11"><a href></a>    driver.get(game_url)</span>
+<span id="cb11-12"><a href></a>    time.sleep(<span class="dv">3</span>)  <span class="co"># Allow page load</span></span>
+<span id="cb11-13"><a href></a></span>
+<span id="cb11-14"><a href></a>    <span class="cf">try</span>:</span>
+<span id="cb11-15"><a href></a></span>
+<span id="cb11-16"><a href></a>        <span class="co"># Extract Away Team Goalies</span></span>
+<span id="cb11-17"><a href></a>        away_goalie_table_id <span class="op">=</span> <span class="ss">f&quot;all_</span><span class="sc">{</span>row[<span class="st">&#39;Away Code&#39;</span>]<span class="sc">}</span><span class="ss">_goalies&quot;</span></span>
+<span id="cb11-18"><a href></a>        home_goalie_table_id <span class="op">=</span> <span class="ss">f&quot;all_</span><span class="sc">{</span>row[<span class="st">&#39;Home Code&#39;</span>]<span class="sc">}</span><span class="ss">_goalies&quot;</span></span>
+<span id="cb11-19"><a href></a>        away_goalie_table <span class="op">=</span> driver.find_element(By.ID, away_goalie_table_id)</span>
+<span id="cb11-20"><a href></a>        home_goalie_table <span class="op">=</span> driver.find_element(By.ID, home_goalie_table_id)</span>
+<span id="cb11-21"><a href></a>        <span class="bu">print</span>(away_goalie_table)</span>
+<span id="cb11-22"><a href></a>        <span class="bu">print</span>(home_goalie_table)</span>
+<span id="cb11-23"><a href></a>        away_goalie_rows <span class="op">=</span> away_goalie_table.find_elements(By.TAG_NAME, <span class="st">&quot;tr&quot;</span>)[<span class="dv">2</span>:]</span>
+<span id="cb11-24"><a href></a>        home_goalie_rows <span class="op">=</span> home_goalie_table.find_elements(By.TAG_NAME, <span class="st">&quot;tr&quot;</span>)[<span class="dv">2</span>:]</span>
+<span id="cb11-25"><a href></a>        <span class="bu">print</span>(away_goalie_rows)</span>
+<span id="cb11-26"><a href></a>        <span class="bu">print</span>(home_goalie_rows)</span>
+<span id="cb11-27"><a href></a>        <span class="cf">for</span> row <span class="kw">in</span> away_goalie_rows:</span>
+<span id="cb11-28"><a href></a>            <span class="bu">print</span>(row.get_attribute(<span class="st">&quot;innerHTML&quot;</span>))</span>
+<span id="cb11-29"><a href></a>        <span class="cf">for</span> row <span class="kw">in</span> away_goalie_rows:</span>
+<span id="cb11-30"><a href></a>            <span class="cf">try</span>:</span>
+<span id="cb11-31"><a href></a>                player_name <span class="op">=</span> row.find_element(By.XPATH, <span class="st">&quot;.//td[@data-stat=&#39;player&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-32"><a href></a>                <span class="bu">print</span>(<span class="ss">f&quot;Goalie found: </span><span class="sc">{</span>player_name<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb11-33"><a href></a>            <span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb11-34"><a href></a>                <span class="bu">print</span>(<span class="st">&quot;No player data in this row&quot;</span>)</span>
+<span id="cb11-35"><a href></a></span>
+<span id="cb11-36"><a href></a>        <span class="co"># Extract first goalie&#39;s stats</span></span>
+<span id="cb11-37"><a href></a>        away_goalie_name <span class="op">=</span> away_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;player&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-38"><a href></a>        <span class="bu">print</span>(away_goalie_name)</span>
+<span id="cb11-39"><a href></a>        away_ga <span class="op">=</span> away_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;goals_against&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-40"><a href></a>        away_dec <span class="op">=</span> away_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;decision&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-41"><a href></a>        away_sa <span class="op">=</span> away_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;shots_against&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-42"><a href></a>        away_saves <span class="op">=</span> away_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;saves&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-43"><a href></a>        away_sv_pct <span class="op">=</span> away_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;save_pct&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-44"><a href></a>        away_shutouts <span class="op">=</span> away_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;shutouts&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-45"><a href></a>        away_pms <span class="op">=</span> away_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;pen_min&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-46"><a href></a>        away_toi <span class="op">=</span> away_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;time_on_ice&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-47"><a href></a></span>
+<span id="cb11-48"><a href></a>        <span class="cf">for</span> row <span class="kw">in</span> home_goalie_rows:</span>
+<span id="cb11-49"><a href></a>            <span class="bu">print</span>(row.get_attribute(<span class="st">&quot;innerHTML&quot;</span>))</span>
+<span id="cb11-50"><a href></a>        <span class="cf">for</span> row <span class="kw">in</span> home_goalie_rows:</span>
+<span id="cb11-51"><a href></a>            <span class="cf">try</span>:</span>
+<span id="cb11-52"><a href></a>                player_name <span class="op">=</span> row.find_element(By.XPATH, <span class="st">&quot;.//td[@data-stat=&#39;player&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-53"><a href></a>                <span class="bu">print</span>(<span class="ss">f&quot;Goalie found: </span><span class="sc">{</span>player_name<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb11-54"><a href></a>            <span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb11-55"><a href></a>                <span class="bu">print</span>(<span class="st">&quot;No player data in this row&quot;</span>)</span>
+<span id="cb11-56"><a href></a></span>
+<span id="cb11-57"><a href></a>        <span class="co"># Extract first goalie&#39;s stats</span></span>
+<span id="cb11-58"><a href></a>        home_goalie_name <span class="op">=</span> home_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;player&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-59"><a href></a>        home_ga <span class="op">=</span> home_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;goals_against&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-60"><a href></a>        home_dec <span class="op">=</span> home_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;decision&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-61"><a href></a>        home_sa <span class="op">=</span> home_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;shots_against&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-62"><a href></a>        home_saves <span class="op">=</span> home_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;saves&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-63"><a href></a>        home_sv_pct <span class="op">=</span> home_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;save_pct&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-64"><a href></a>        home_shutouts <span class="op">=</span> home_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;shutouts&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-65"><a href></a>        home_pms <span class="op">=</span> home_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;pen_min&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-66"><a href></a>        home_toi <span class="op">=</span> home_goalie_rows[<span class="dv">0</span>].find_element(By.XPATH, <span class="st">&quot;./td[@data-stat=&#39;time_on_ice&#39;]&quot;</span>).text.strip()</span>
+<span id="cb11-67"><a href></a></span>
+<span id="cb11-68"><a href></a>    <span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb11-69"><a href></a>        <span class="bu">print</span>(<span class="st">&#39;exception&#39;</span>)</span>
+<span id="cb11-70"><a href></a>        away_goalie_name, away_ga, away_dec, away_sa, away_saves, away_sv_pct, away_shutouts, away_pms, away_toi <span class="op">=</span> [<span class="st">&quot;N/A&quot;</span>] <span class="op">*</span> <span class="dv">9</span></span>
+<span id="cb11-71"><a href></a>        home_goalie_name, home_ga, home_dec, home_sa, home_saves, home_sv_pct, home_shutouts, home_pms, home_toi <span class="op">=</span> [<span class="st">&quot;N/A&quot;</span>] <span class="op">*</span> <span class="dv">9</span></span>
+<span id="cb11-72"><a href></a></span>
+<span id="cb11-73"><a href></a>    goalie_stats.append([</span>
+<span id="cb11-74"><a href></a>        away_goalie_name, away_ga, away_dec, away_sa, away_saves, away_sv_pct, away_shutouts, away_pms, away_toi,</span>
+<span id="cb11-75"><a href></a>        home_goalie_name, home_ga, home_dec, home_sa, home_saves, home_sv_pct, home_shutouts, home_pms, home_toi</span>
+<span id="cb11-76"><a href></a>    ])</span>
+<span id="cb11-77"><a href></a></span>
+<span id="cb11-78"><a href></a><span class="co"># Convert goalie stats to DataFrame</span></span>
+<span id="cb11-79"><a href></a>goalie_df <span class="op">=</span> pd.DataFrame(goalie_stats, columns<span class="op">=</span>[</span>
+<span id="cb11-80"><a href></a>    <span class="st">&quot;Away Goalie&quot;</span>, <span class="st">&quot;Away GA&quot;</span>, <span class="st">&quot;Away DEC&quot;</span>, <span class="st">&quot;Away SA&quot;</span>, <span class="st">&quot;Away Saves&quot;</span>, <span class="st">&quot;Away SV%&quot;</span>, <span class="st">&quot;Away Shutouts&quot;</span>, <span class="st">&quot;Away PIM&quot;</span>, <span class="st">&quot;Away TOI&quot;</span>,</span>
+<span id="cb11-81"><a href></a>    <span class="st">&quot;Home Goalie&quot;</span>, <span class="st">&quot;Home GA&quot;</span>, <span class="st">&quot;Home DEC&quot;</span>, <span class="st">&quot;Home SA&quot;</span>, <span class="st">&quot;Home Saves&quot;</span>, <span class="st">&quot;Home SV%&quot;</span>, <span class="st">&quot;Home Shutouts&quot;</span>, <span class="st">&quot;Home PIM&quot;</span>, <span class="st">&quot;Home TOI&quot;</span></span>
+<span id="cb11-82"><a href></a>])</span>
+<span id="cb11-83"><a href></a></span>
+<span id="cb11-84"><a href></a><span class="co"># Merge DataFrames</span></span>
+<span id="cb11-85"><a href></a>final_df <span class="op">=</span> pd.concat([game_df, goalie_df], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-86"><a href></a></span>
+<span id="cb11-87"><a href></a><span class="co"># Save to CSV</span></span>
+<span id="cb11-88"><a href></a>final_df.to_csv(<span class="st">&quot;nhl_games_with_goalies.csv&quot;</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb11-89"><a href></a></span>
+<span id="cb11-90"><a href></a><span class="bu">print</span>(final_df.head())</span>
+<span id="cb11-91"><a href></a></span>
+<span id="cb11-92"><a href></a><span class="co"># Close WebDriver</span></span>
+<span id="cb11-93"><a href></a>driver.quit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </section>
 <section id="game-summary-table" class="slide level2">
 <h2>Game Summary Table</h2>
 <div class="scrollable">
-<div id="167878b4" class="cell" data-execution_count="4">
+<div id="9e3fff97" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
 <pre><code>         Date      Time            Away Team Away Code  Away Score  \
 0  2023-10-10   8:00 PM   Chicago Blackhawks       CHI           4   
@@ -1600,8 +1609,8 @@ margin-right: 0; }
 <h1>Data Ethics</h1>
 
 </section>
-<section id="why-can-web-scraping-be-un-ethical" class="slide level2">
-<h2>Why can Web-Scraping be un-ethical</h2>
+<section id="why-can-web-scraping-be-unethical" class="slide level2">
+<h2>Why can Web-Scraping be unethical</h2>
 <ul>
 <li>Just because you can web-scrape doesn’t always mean you should</li>
 <li>In order to be ethical data scientists, always be careful of where you are getting the data from. Not all websites allow you to scrape data</li>
@@ -1634,7 +1643,6 @@ margin-right: 0; }
 <section id="further-reading" class="slide level2">
 <h2>Further Reading</h2>
 <ul>
-<li>https://scrapfly.io/blog/web-scraping-with-selenium-and-python/</li>
 <li>https://www.browserstack.com/guide/web-scraping-using-selenium-python</li>
 <li>https://www.geeksforgeeks.org/implementing-web-scraping-python-beautiful-soup/</li>
 <li>https://beautiful-soup-4.readthedocs.io/en/latest/</li>
