@@ -29,7 +29,7 @@ Websites are primarily structured with HTML (Hypertext Markup Language), which o
 - `<body>` : identifies the website body
 - `<table>` : identifies a table
 - `<tbody>` : identifies the body of the table
-- `<tr>` : indentifies the row of a table
+- `<tr>` : identifies the row of a table
 
 
 # How to Web-Scrape with Python
@@ -42,8 +42,6 @@ Websites are primarily structured with HTML (Hypertext Markup Language), which o
   websites.
 - Beautiful soup can be installed using 
 ```{bash}
-#| echo: true
-#| eval: false
 pip install beautifulsoup4
 ```
 
@@ -59,8 +57,6 @@ pip install beautifulsoup4
   customize it, and render it in real time based on user requests.
 - Selenium can be installed using 
 ```{bash}
-#| echo: true
-#| eval: false
 pip install selenium
 ```
 
@@ -98,6 +94,7 @@ pip install selenium
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import re
 
 # URL of the page
 url = "https://gpracingstats.com/drivers/"
@@ -126,6 +123,10 @@ if table:
             driver_name = cols[0].text.strip()
             birth_date = cols[1].text.strip()
             f1_years = cols[2].text.strip()
+            country_match = re.match(r"\((.*?)\)\s*(.*)", driver_name) # Extract country using regex
+            if country_match:
+                country = country_match.group(1)  # Extract country code
+                driver_name = country_match.group(2)  # Extract actual
 
             # Check for special class highlighting
             is_current = "Yes" if "current-hl" in row.get("class", []) else "No"
@@ -137,7 +138,7 @@ if table:
 
 
 ## Save as a Data Frame
-```{r}
+```{python}
 #| echo: true
 #| eval: true
 # Create a DataFrame
@@ -167,9 +168,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 ```
 
-## Import Relevant Packages
+## Set-Up Web Driver
 ::: {.scrollable-code}
-```{r}
+```{python}
 #| echo: true
 #| eval: false
 CHROMEDRIVER_PATH = r"C:/Users/mpdes/Downloads/chromedriver-win64 (1)/chromedriver-win64/chromedriver.exe"
@@ -198,7 +199,7 @@ wait = WebDriverWait(driver, 5)
 
 ## Scraping the Game Data
 ::: {.scrollable-code}
-```{r}
+```{python}
 #| echo: true
 #| eval: false
 url = "https://www.hockey-reference.com/leagues/NHL_2024_games.html"
@@ -259,7 +260,7 @@ game_df = pd.DataFrame(game_data, columns=[
 
 ## Scraping Goalie Data
 ::: {.scrollable-code}
-```{r}
+```{python}
 #| echo: true
 #| eval: false
 goalie_stats = []
@@ -413,7 +414,7 @@ print(df)
 
 # Data Ethics
 
-## Why can Web-Scraping be un-ethical
+## Why can Web-Scraping be unethical
 - Just because you can web-scrape doesn’t always mean you should
 - In order to be ethical data scientists, always be careful of where you are 
   getting the data from. Not all websites allow you to scrape data
@@ -440,7 +441,6 @@ This presentation has covered:
 
 ## Further Reading
 
-- https://scrapfly.io/blog/web-scraping-with-selenium-and-python/
 - https://www.browserstack.com/guide/web-scraping-using-selenium-python
 - https://www.geeksforgeeks.org/implementing-web-scraping-python-beautiful-soup/
 - https://beautiful-soup-4.readthedocs.io/en/latest/
